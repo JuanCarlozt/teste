@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link class="image/png" rel="icon" href="MoonHeadShop-Icon.jpeg">
+    <title>MoonHeadShop</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(180deg, #14001f, #2d004d);
+            color: white;
+            min-height: 100vh;
+        }
+
+        /* HEADER */
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 40px;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid #7b2cbf;
+        }
+
+        .logo h1 {
+            margin: 0;
+            color: #d9a3ff;
+            font-size: 1.5rem;
+        }
+
+        .instagram {
+            text-decoration: none;
+            background: #7b2cbf;
+            padding: 10px 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .instagram:hover {
+            background: #9d4edd;
+            transform: scale(1.05);
+        }
+
+        /* MENU */
+        .menu {
+            text-align: center;
+            padding: 25px;
+        }
+
+        .menu button {
+            margin: 5px;
+            padding: 10px 20px;
+            border: 1px solid #7b2cbf;
+            border-radius: 20px;
+            background: transparent;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .menu button:hover {
+            background: #5a189a;
+        }
+
+        /* PRODUTOS */
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            padding: 20px 5%;
+        }
+
+        .card {
+            background: rgba(255,255,255,0.05);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            border: 1px solid rgba(186,85,255,0.1);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 0 20px rgba(186,85,255,0.4);
+            border-color: #ba55ff;
+        }
+
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .price {
+            color: #c77dff;
+            font-size: 1.3em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        button.add {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: #7b2cbf;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button.add:hover { background: #9d4edd; }
+
+        /* CARRINHO */
+        .cart {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            width: 300px;
+            background: #240046;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            border: 1px solid #7b2cbf;
+            z-index: 1000;
+        }
+
+        /* FOOTER */
+        footer {
+            text-align: center;
+            padding: 40px;
+            margin-top: 50px;
+            background: rgba(0,0,0,0.5);
+            color: #aaa;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo">
+        <img src="MoonHeadShop-Icon.jpeg" alt="Logo">
+        <h1>MoonHeadShop</h1>
+    </div>
+    <a class="instagram" href="https://instagram.com/moonheadshop7/" target="_blank">Instagram</a>
+</header>
+
+<div class="menu">
+    <button onclick="filterProducts('all')">Todos</button>
+    <button onclick="filterProducts('tabaco')">Tabacos</button>
+    <button onclick="filterProducts('seda')">Sedas</button>
+</div>
+
+<section class="products">
+    <div class="card" data-category="tabaco">
+        <img src="amsterdam.webp" alt="Tabaco Amsterdam">
+        <h3>Tabaco Amsterdam 25g</h3>
+        <p class="price">R$ 16,00</p>
+        <button class="add" onclick="addToCart(16, 'Tabaco Amsterdam 25g')">Adicionar</button>
+    </div> <div class="card" data-category="tabaco">
+        <img src="Sasso hash.webp" alt="Tabaco Sasso">
+        <h3>Tabaco Sasso Hash 25g</h3>
+        <p class="price">R$ 18,00</p>
+        <button class="add" onclick="addToCart(18, 'Tabaco Sasso Hash 25g')">Adicionar</button>
+    </div>
+
+    <div class="card" data-category="seda">
+        <img src="bembolado.webp" alt="Seda Bem Bolado">
+        <h3>Seda Bem Bolado Large Size</h3>
+        <p class="price">R$ 7,00</p>
+        <button class="add" onclick="addToCart(7, 'Seda Bem Bolado Large Size')">Adicionar</button>
+    </div>
+
+    <div class="card" data-category="seda">
+        <img src="zomonatural.webp" alt="Seda Zomo">
+        <h3>Seda Zomo Natural</h3>
+        <p class="price">R$ 4,00</p>
+        <button class="add" onclick="addToCart(4, 'Seda Zomo Natural')">Adicionar</button>
+    </div>
+</section>
+
+<div class="cart" id="floating-cart">
+    <h3>🛒 Seu Carrinho</h3>
+    <ul id="cart-list" style="list-style: none; padding: 0; max-height: 200px; overflow-y: auto;"></ul>
+    <hr style="border: 0.5px solid #7b2cbf;">
+    <p><strong>Total: R$ <span id="total">0.00</span></strong></p>
+    <button onclick="finalizarCompra()" style="width:100%; padding:12px; background:#25d366; border:none; border-radius:8px; color:white; font-weight:bold; cursor:pointer;">Finalizar no WhatsApp</button>
+</div>
+
+<footer>
+    Venda exclusiva para maiores de 18 anos • MoonHeadShop © 2026
+</footer>
+
+<script>
+let cart = [];
+
+function addToCart(price, name) {
+    const item = cart.find(prod => prod.name === name);
+    if(item){
+        item.quantity++;
+    } else {
+        cart.push({ price, name, quantity: 1 });
+    }
+    renderCart();
+}
+  
+function removeItem(index) {
+    if (cart[index].quantity > 1){
+        cart[index].quantity--;
+    } else {
+        cart.splice(index , 1);
+    }
+    renderCart();
+}
+
+function renderCart() {
+    const cartList = document.getElementById("cart-list");
+    const totalDisplay = document.getElementById("total");
+    cartList.innerHTML = "";
+    let totalAcumulado = 0; 
+
+    cart.forEach((item, index) => {
+        totalAcumulado += item.price * item.quantity;
+        
+        const li = document.createElement("li");
+        li.style.display = "flex";
+        li.style.justifyContent = "space-between";
+        li.style.alignItems = "center";
+        li.style.marginBottom = "10px";
+        li.style.fontSize = "0.9em";
+
+        li.innerHTML = `
+            <span>${item.quantity}x ${item.name}</span>
+            <div>
+                <span>R$ ${(item.price * item.quantity).toFixed(2)}</span>
+                <button onclick="removeItem(${index})" 
+                    style="margin-left:8px; background:#ff4d4d; border:none; color:white; border-radius:4px; cursor:pointer; padding: 2px 6px;">
+                    ✕
+                </button>
+            </div>
+        `;
+        cartList.appendChild(li);
+    });
+
+    totalDisplay.innerText = totalAcumulado.toFixed(2);
+}
+
+function filterProducts(category) {
+    const cards = document.querySelectorAll(".card");
+    cards.forEach(card => {
+        if (category === "all") {
+            card.style.display = "block";
+        } else {
+            card.dataset.category === category ? card.style.display = "block" : card.style.display = "none";
+        }
+    });
+}
+
+function finalizarCompra() {
+    if(cart.length === 0) {
+        alert("Seu carrinho está vazio!");
+        return;
+    }
+
+    let mensagem = "☾ *Novo Pedido - Moon HeadShop*\n\n";
+    let totalPedido = 0;
+
+    cart.forEach(item => {
+        let subtotal = item.price * item.quantity;
+        mensagem += `• *${item.quantity}x* ${item.name} - R$ ${subtotal.toFixed(2)}\n`;
+        totalPedido += subtotal;
+    });
+
+    mensagem += `\n💰 *Total:* R$ ${totalPedido.toFixed(2)}\n`;
+    mensagem += `\n💳 *Pagamento:* (Informe aqui: Pix, Cartão ou Dinheiro)`;
+    mensagem += `\n📍 *Endereço:* (Informe seu endereço completo)`;
+
+    const numero = "557184565154"; 
+    const url = `https://wa.me/${numero}?text=${encodeURIComponent(mensagem)}`;
+    window.open(url, "_blank");
+}
+</script>
+
+</body>
+</html>
